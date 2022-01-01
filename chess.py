@@ -1,6 +1,14 @@
 import numpy as np
 from piece import ChessPiece
 
+
+'''
+TODO: 
+    user_input:
+        - exd4 (read-in moves taking another piece)
+        - Nce4 (read-in moves where two pieces can go to same square, Knight on c to e4)
+    - convert moves to 2d array coordinates (a1 --> (0, 7))
+'''
 class Main:
     def __init__(self):        
         # Some variables
@@ -20,10 +28,22 @@ class Main:
                 turn = "Black"
             elif turn == "Black":
                 turn = "White"
+            # Reading user input
+            if user_input in ["O-O-O", "O-O"]: # If user gives castling (WARNING: does not check whether castling is available)
+                if user_input == "O-O-O":
+                    castling = "Q" # Q for Queenside castling
+                elif user_input == "O-O":
+                    castling = "K" # K for Kingside castling
+            else: # If user isn't castling
+                if len(user_input) == 2: # if user only gives coordinates (WARNING: does not check if user_input is of invalid type)
+                    piece_type = "P" # Piece type is pawn
+                elif len(user_input) > 2:
+                    piece_type = user_input[0]
+                coordinate = user_input[-2:]
+                print(coordinate) # DEBUG
             
             # Print Board
             for row in self.board:
                 print(' '.join(row))
+            break # remove
 
-game = Main()
-game.run_game()
